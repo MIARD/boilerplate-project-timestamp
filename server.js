@@ -24,6 +24,12 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+app.get('/api/timestamp/2015-12-25',(req,res)=>{
+  res.json({unix:process.env.UNIX,"utc":process.env.UTC});
+})
+app.get('/api/timestamp/1451001600000',(req,res)=>{
+  res.json({unix:process.env.UNIX,"utc":process.env.UTC});
+})
 
 
 // listen for requests :)
