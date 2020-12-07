@@ -24,12 +24,27 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get('/api/timestamp/2015-12-25',(req,res)=>{
-  res.json({unix:process.env.UNIX,"utc":process.env.UTC});
+app.get('/api/timestamp/:date',(req,res)=>{
+
+   let timestamp = isNaN(req.params.date)?req.params.date.toString():parseInt(req.params.date);
+  let d = new Date(timestamp);
+  console.log(d);
+  if(d instanceof Date && !isNaN(d)){
+    let unix = d.getTime();
+    let utc = d.toGMTString();
+    
+  res.json({unix:unix,"utc":utc});
+  }
+  else res.json({ error : "Invalid Date" });
 })
-app.get('/api/timestamp/1451001600000',(req,res)=>{
-  res.json({unix:process.env.UNIX,"utc":process.env.UTC});
+app.get('/api/timestamp/',(req,res)=>{
+  let d = new Date();
+  let unix = d.getTime();
+  let utc = d.toGMTString(); 
+  res.json({unix:unix,"utc":utc});
 })
+
+
 
 
 // listen for requests :)
